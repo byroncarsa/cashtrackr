@@ -4,19 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password;
 use Override;
 
 class SignupRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     #[Override]
     public function messages() : array
     {
@@ -45,9 +37,9 @@ class SignupRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
-            //'password' => ['required', 'confirmed', 'min:8'],
+            // 'password' => ['required', 'confirmed', 'min:8']
             'password' => ['required', 'confirmed', 
-                Password::min(8)
+                Password::min(3)
                     ->letters()
                     ->mixedCase()
                     ->symbols()
